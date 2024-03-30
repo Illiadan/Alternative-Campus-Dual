@@ -1,0 +1,105 @@
+/* Timetable */
+div.eventinfo {
+	display: none;
+}
+
+div:hover + div.eventinfo {
+	display: block;
+	width: 200px;
+  margin: 0px 0px;
+  position: absolute;
+  max-width: 200;
+  z-index: 100;
+}
+
+.calendar {
+  font-size: 13px;
+}
+
+.scroller-timetable {
+	height: calc(100vh - 250px);
+	position: relative;
+	overflow-y: scroll;
+  padding: 0px 0px 1px 1px;
+  border: 1px solid black !important;
+}
+
+.scroller-dashboard {
+	height: calc(55vh - 215px);
+	position: relative;
+	overflow-y: scroll;
+}
+
+.calendar td {
+  border: 1px solid #000000 !important;
+  border-width: 0 0 1px 1px !important;
+  background-color: white;
+}
+
+.calendar th {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: white;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  font-size: 18px;
+}
+
+.calendar td {
+  height: 4em;
+  padding: 0px !important;
+}
+
+.calendar td.is-monthly {
+  height: 140px;
+  padding: 20px 0px 0px 5px;
+}
+
+.calendar td.is-daily {
+  display: flex;
+}
+
+.calendar td.is-weekly div.timetable-flexbox {
+  margin: 0px 0px;
+  display: flex;
+  position: absolute;
+  z-index: 100;
+}
+
+.calendar td.is-weekly div.timetable-flexbox div {
+  max-width: 100px;
+  margin-right: 5px;
+  flex: 1;
+}
+
+.calendar td.is-daily div {
+  margin: 0px 20px;
+  max-width: 150px;
+  flex: 1;
+  z-index: 100;
+}
+
+.calendar td.is-weekly div:hover, .calendar td.is-daily div:hover {
+  z-index: 150;
+}
+
+.calendar td div.is-lecture {
+  background-color: #ffd280;
+  border-radius: 1;
+  padding: 2px;
+  border: 2px solid #ffa500;
+}
+
+.calendar td div.is-exam {
+  background-color: #c58080;
+  border-radius: 1;
+  padding: 2px;
+  border: 2px solid #8b0000;
+}
+
+/* Organisation */
+
+.button#doc_btn:hover {
+	background: #3e52a8;
+}

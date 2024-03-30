@@ -1,0 +1,188 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="{% static 'css/bulma.css' %}" />
+		<link rel="stylesheet" href="{% static 'css/own_style.css' %}" />
+		<title>Alternative Campus Dual</title>
+	</head>
+	<body>
+		<!-- Header -->
+		<div
+			class="columns has-background-link"
+			style="height: 15vh; margin: 0rem; display: flex; align-items: center; min-height: 100px"
+		>
+			<!-- Title -->
+			<div class="column is-one-half" style="padding: 0rem; min-width: 290px">
+				<div
+					class="box has-background-link"
+					style="
+						margin-bottom: 0rem;
+						border-radius: 0rem;
+						box-shadow: none;
+						padding: 0rem;
+						padding-left: 1rem;
+					"
+				>
+					<h1 class="title is-size-1 has-text-light">Alternative Campus Dual</h1>
+				</div>
+			</div>
+
+			<!-- Login-Data -->
+			<div
+				class="column is-one-quarter has-background-link"
+				style="padding: 0rem; padding-right: 1rem; display: flex; justify-content: end; min-width: 155px"
+			>
+				<div
+					class="box has-background-link"
+					style="margin-bottom: 0rem; border-radius: 0rem; box-shadow: none; padding: 0rem"
+				>
+					<div
+						class="box has-background-link has-text-light"
+						style="margin-bottom: 0rem; box-shadow: none; padding: 0rem"
+					>
+						<p>Eingeloggt als:</p>
+						<ul>
+							<li style="padding-left: 1.5rem">{{ user.last_name }}, {{ user.first_name }}</li>
+							<li style="padding-left: 1.5rem">{{ user.email }}</li>
+							{% if user.seminargroup != null %}
+								<li style="padding-left: 1.5rem">{{ user.seminargroup }}</li>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Logo BA Leipzig -->
+			<div
+				class="column is-one-quarter has-background-link"
+				style="
+					padding: 0rem;
+					padding-right: 0.5rem;
+					display: flex;
+					justify-content: end;
+					min-width: 195px;
+					max-width: 300px;
+				"
+			>
+				<div
+					class="box has-background-link"
+					style="margin-bottom: 0rem; border-radius: 0rem; box-shadow: none; padding: 0rem"
+				>
+					<div class="box has-background-link" style="padding: 0rem; box-shadow: none; border-radius: 0px">
+						<figure class="image">
+							<a target="_blank" rel="noopener noreferrer" href="https://www.ba-leipzig.de/">
+								<img src="{% static 'media/ba_leipzig_logo.svg' %}" alt="Logo BA Leipzig" />
+							</a>
+						</figure>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Navbar + Content -->
+		<div class="box" style="height: 85vh; padding: 0rem; border-radius: 0rem; box-shadow: none">
+			<div class="columns has-background-link" style="height: 100%; margin: 0rem">
+				<!-- Navbar -->
+				<div class="column" style="padding: 0rem; min-width: 115px; max-width: 130px">
+					<nav class="navbar is-link">
+						<ul class="navbar-menu" style="min-width: 115px; max-width: 130px">
+							<li class="navbar-start" style="width: 100%">
+								<a href="/dashboard/" class="navbar-item has-text-light" style="width: 100%"
+									>Übersicht</a
+								>
+							</li>
+						</ul>
+					</nav>
+					<nav class="navbar is-link">
+						<ul class="navbar-menu" style="min-width: 115px; max-width: 130px">
+							<li class="navbar-start" style="width: 100%">
+								<a href="/timetable/" class="navbar-item has-text-light" style="width: 100%"
+									>Stundenplan</a
+								>
+							</li>
+						</ul>
+					</nav>
+					<nav class="navbar is-link">
+						<ul class="navbar-menu" style="min-width: 115px; max-width: 130px">
+							<li class="navbar-start" style="width: 100%">
+								<a href="/examination/" class="navbar-item has-text-light" style="width: 100%"
+									>Prüfungen</a
+								>
+							</li>
+						</ul>
+					</nav>
+					<nav class="navbar is-link">
+						<ul class="navbar-menu" style="min-width: 115px; max-width: 130px">
+							<li class="navbar-start" style="width: 100%">
+								<a href="/organisation/" class="navbar-item has-text-light" style="width: 100%"
+									>Organisation</a
+								>
+							</li>
+						</ul>
+					</nav>
+					<nav class="navbar is-link" style="margin-bottom: 3.25rem">
+						<ul class="navbar-menu" style="min-width: 115px; max-width: 130px">
+							<li class="navbar-start" style="width: 100%">
+								<a href="/documents/" class="navbar-item has-text-light" style="width: 100%"
+									>Dokumente</a
+								>
+							</li>
+						</ul>
+					</nav>
+					<nav class="navbar is-link">
+						<ul class="navbar-menu" style="min-width: 115px; max-width: 130px">
+							<li class="navbar-start" style="width: 100%">
+								<a href="{% url 'logout' %}" class="navbar-item has-text-light" style="width: 100%"
+									>Logout</a
+								>
+							</li>
+						</ul>
+					</nav>
+					<nav class="navbar is-link" style="margin-top: 1rem">
+						<ul class="navbar-menu" style="min-width: 115px; max-width: 130px">
+							<li class="navbar-start">
+								<div
+									class="box has-background-white"
+									style="padding: 0rem; box-shadow: none; margin: 1rem; border-radius: 36px"
+								>
+									<figure class="image" style="padding: 0.25rem">
+										<a
+											target="_blank"
+											rel="noopener noreferrer"
+											href="https://bildungsportal.sachsen.de/opal/"
+										>
+											<img src="{% static 'media/opal_logo.png' %}" alt="Logo OPAL" />
+										</a>
+									</figure>
+								</div>
+							</li>
+						</ul>
+					</nav>
+				</div>
+
+				<!-- Content -->
+				<div class="column" style="padding: 0rem">
+					<div
+						class="box has-background-white"
+						style="
+							height: 100%;
+							box-shadow: none;
+							border-top-left-radius: 12px;
+							border-top-right-radius: 0px;
+							border-bottom-left-radius: 0px;
+							border-bottom-right-radius: 0px;
+							padding: 0rem;
+						"
+					>
+						{% block content %} {% endblock content %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

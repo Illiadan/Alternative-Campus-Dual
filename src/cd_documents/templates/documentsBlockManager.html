@@ -1,0 +1,69 @@
+{% extends "documentsLayout.html" %} {% block documents %}
+<div
+	class="wrapper"
+	style="
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(4, 1fr);
+		grid-template-areas: 'doc1' 'doc2' 'doc3' 'doc4';
+		grid-gap: 0.25rem;
+	"
+>
+	{% if isStu %}
+	<div
+		class="button"
+		onclick="showPDF('{{pdfList.1}}')"
+		style="height: auto; grid-area: doc1; background: #5a78ff; color: #f5f5f5"
+	>
+		Immatrikulationsbescheinigung
+	</div>
+	<div
+		class="button"
+		onclick="showPDF('{{pdfList.2}}')"
+		style="height: auto; grid-area: doc2; background: #5a78ff; color: #f5f5f5"
+	>
+		Leistungsbescheinigung nach §48 BAföG
+	</div>
+	<div
+		class="button"
+		onclick="showPDF('{{pdfList.3}}')"
+		style="height: auto; grid-area: doc3; background: #5a78ff; color: #f5f5f5"
+	>
+		Bescheinigung nach §9 BAföG <br />zur Vorlage beim Amt für Ausbildungsförderung
+	</div>
+	<div
+		class="button"
+		onclick="showPDF('{{pdfList.4}}')"
+		style="height: auto; grid-area: doc4; background: #5a78ff; color: #f5f5f5"
+	>
+		Notenbescheinigung
+	</div>
+	{% else %}
+	<div
+		class="button"
+		onclick="showPDF('{{pdfList.1}}')"
+		style="height: auto; grid-area: doc1; background: #5a78ff; color: #f5f5f5"
+	>
+		Anwesenheitsliste <br />Vorlesung
+	</div>
+	<div
+		class="button"
+		onclick="showPDF('{{pdfList.2}}')"
+		style="height: auto; grid-area: doc2; background: #5a78ff; color: #f5f5f5"
+	>
+		Anwesenheitsliste <br />Prüfung
+	</div>
+	{% endif %}
+</div>
+{% endblock documents %} 
+
+{% block pdfViewer %}
+	<iframe style="background: #cad0ef; width: 100%; height: 100%; display: none" id="pdfFrame"></iframe>
+	<script>
+		function showPDF(id) {
+			let pdfFrame = document.getElementById("pdfFrame");
+			pdfFrame.setAttribute("src", id);
+			pdfFrame.style.display = "block";
+		}
+	</script>
+{% endblock pdfViewer %}

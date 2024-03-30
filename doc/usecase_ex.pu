@@ -1,0 +1,43 @@
+@startuml
+left to right direction
+actor Student as stu
+actor Dozent as doz
+actor Organisator as org
+
+package Prüfungsverwaltung {
+	usecase "Prüfungen anzeigen" as ex_1
+	usecase "Prüfung anlegen" as ex_2
+	usecase "Prüfung bearbeiten" as ex_3
+	usecase "Prüfung löschen" as ex_4
+	usecase "Zur Prüfung anmelden" as ex_5
+	usecase "Von Prüfung abmelden" as ex_6
+	usecase "Hausarbeit abgeben" as ex_7
+	usecase "Abgegebene Hausarbeit löschen" as ex_8
+	usecase "Abgegebene Hausarbeit herunterladen" as ex_9
+	usecase "Prüfungsverfahren benoten" as ex_10
+	usecase "Benotung einsehen" as ex_11
+}
+
+stu --> ex_1
+stu --> ex_5
+stu --> ex_6
+stu --> ex_7
+stu --> ex_8
+stu --> ex_9
+stu --> ex_11
+
+doz --> ex_1
+doz --> ex_9
+doz --> ex_10
+doz --> ex_11
+
+org --> ex_1
+org --> ex_2
+org --> ex_3
+org --> ex_4
+org --> ex_5
+org --> ex_6
+org --> ex_10
+org --> ex_11
+
+@enduml

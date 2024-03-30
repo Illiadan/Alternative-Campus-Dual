@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<div class="content container">
+  <h1><del>Campus-Dual Selfservices</del> Campus Dual Alternative</h1>
+  <section class="section">
+    <p>Bitte registrieren Sie sich für die Campus-Dual-Selfservices mit Ihrer Matrikelnummer und Ihrer Email-Adresse.</p>
+
+    <p>Bitte bei anderen Problemen/Fragen/Vorschlägen an <del>selfservice@campus-dual.de</del> s5001554@ba-sachsen.de oder s5001725@ba-sachsen.de wenden.</p>
+
+    <p>Bitte beachten Sie, dass für das Campus-Dual-Selfserviceportal nur die Browser Microsoft Internet Explorer und Mozilla Firefox in der jeweils aktuellen Version unterstützt werden. Bei Benutzung von anderen Browsern oder veralteten Browserversionen ist mit starken Einschränkungen bis hin zur Nichtfunktionalität zu rechnen.</p>
+  </section>
+
+  <section class="section">
+    <p>Schon für die Campus-Dual-Selfservices registriert?</p>
+    <a href="{% url 'login' %}" class="button is-primary">Anmelden</a>
+  </section>
+
+  <section class="section">
+    <p>Kennwort vergessen? Account gesperrt?</p>
+    <a href="{% url 'password_reset' %}" class="button is-info">Passwort zurücksetzen</a></br>
+  </section>
+</div>
+
+{% endblock content %}

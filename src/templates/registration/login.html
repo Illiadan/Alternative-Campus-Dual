@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content container">
+  <section class="section">
+    <h1>Login Campus Dual Alternative</h1>
+  </section>
+
+  <section class="section">
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <div class="field">
+        <label class="label" for="id_username">E-Mail-Adresse</label>
+        <div class="control">
+          <input class="input" name="username" type="text" placeholder="s1234567@ba-sachsen.de" maxlength="254" required="" id="id_username">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Passwort</label>
+        <div class="control">
+          <input class="input" name= "password" type="password" placeholder="" autocomplete="current-password" required="" id="id_password">
+        </div>
+        {% if form.errors %}
+        <p class="help is-danger">Deine E-Mail-Adresse oder dein Passwort sind nicht richtig. Versuch es noch einmal.</p>
+        {% endif %}
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary" type="submit">Login</button>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
+{% endblock %}
+

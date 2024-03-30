@@ -1,0 +1,44 @@
+{% extends "baseLayout.html" %} 
+
+{% block content %}
+    
+<div
+	class="wrapper"
+	id="doc_wrapper"
+	style="
+		display: grid;
+		height: 85vh;
+		padding: 1.25rem;
+		grid-template-columns: 1fr 5fr;
+		grid-template-rows: 1fr;
+		grid-template-areas: 'ctt1 ctt2';
+		grid-gap: 1.5rem;
+        margin: 0rem;
+	"
+>
+
+    <!-- Content1 -->
+	<div
+		class="box"
+		id="doc_content1"
+		style="background: #485fc74a; grid-area: ctt1; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+	>
+        {% block documents %}
+        
+        {% endblock documents %}
+	</div>
+	
+    <!-- Content2 -->
+    <div
+		class="box"
+		id="doc_content2"
+		style="background: #485fc74a; grid-area: ctt2; margin-bottom: 0rem; border-style: groove; border-color: #485fc7; display: flex; align-items: center; justify-content: center"
+	>
+        {% block pdfViewer %}
+        
+        {% endblock pdfViewer %}
+	</div>
+
+</div>
+
+{% endblock content %}

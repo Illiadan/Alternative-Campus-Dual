@@ -1,0 +1,69 @@
+@startuml
+'hide the spot
+hide circle
+
+entity Nutzer {
+	* **E-Mail** : text
+	* Vorname : text
+	* Nachname : text
+	* Passwort : hash
+}
+
+entity Student
+entity Dozent
+entity Organisator
+
+	Nutzer -- Student : "is a"
+	Nutzer -- Dozent : "is a"
+	Nutzer -- Organisator : "is a"
+
+entity Seminargruppe {
+	* **Bezeichner** : text
+	* Immatrikulationsjahr : date
+}
+
+entity Modul {
+	* **ModulID** : int
+	* Fachrichtung: "Informatik", "Service Engineering", ...
+	* Modulcode: text
+}
+
+entity Ereignis {
+	* **EreignisID** : int
+	* Startdatum : date
+	* Enddatum : date
+}
+
+entity Raum {
+	* **Raumcode** : text
+}
+
+entity Prüfung {
+	* Art : "Klausur", "Hausarbeit"
+	* Sichtbarkeitsdatum : date
+	* Einschreibeschluss : date
+}
+
+entity Vorlesung {
+}
+
+entity Prüfungsverfahren {
+	* **PrüfungsverfahrenID** : int
+	* Versuch : "1", "2", "3"
+	* Benotung : "1,0", "1,3", "1,7", ...
+}
+
+	Ereignis -- Prüfung : "is a"
+	Ereignis -- Vorlesung : "is a"
+	Ereignis "N" -- "M" Raum
+
+	Student "N" -- "0..1" Seminargruppe
+
+	Modul "N" -- "1..M" Dozent
+	Modul "1" -- "N" Ereignis
+	Seminargruppe "1" -- "N" Ereignis
+
+	Prüfungsverfahren "N" -- "1" Student
+	Prüfungsverfahren "N" -- "1" Prüfung
+
+@enduml

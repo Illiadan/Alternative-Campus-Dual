@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load django_explorer %}
+
+{% block content %}
+<div class="content">
+    <h3 class="is-title">{{ header_path }}</h3>
+    <table style="table-layout: fixed; width: 100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th style="width: 100px">Größe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if can_go_back %}
+                <tr>
+                    {% load static %}
+                    <td><a href="../"><img src="{% static 'media/corner-left-up.svg' %}" alt='arrow icon'/>..</a></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+            {% for file in files %}
+                <tr>
+                    <td><a {{ file.href }}>{% plain_file_name file %}</a></td>
+                    <td>{% if file.type == "file" %}<p>{{ file.readable_size }}</p>{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

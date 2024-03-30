@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+actor Student as stu
+actor Dozent as doz
+actor Organisator as org
+
+package Nutzerverwaltung {
+	usecase "Anmelden" as nv_1
+	usecase "Abmelden" as nv_2
+	usecase "Passwort zurücksetzen" as nv_3
+	usecase "Nutzer anzeigen" as nv_4
+	usecase "Nutzer anlegen" as nv_5
+	usecase "Nutzer bearbeiten" as nv_6
+	usecase "Nutzer löschen" as nv_7
+}
+
+stu --> nv_1
+stu --> nv_2
+stu --> nv_3
+
+doz --> nv_1
+doz --> nv_2
+doz --> nv_3
+
+org --> nv_1
+org --> nv_2
+org --> nv_3
+org --> nv_4
+org --> nv_5
+org --> nv_6
+org --> nv_7
+
+@enduml

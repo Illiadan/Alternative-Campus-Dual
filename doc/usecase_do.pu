@@ -1,0 +1,13 @@
+@startuml
+left to right direction
+actor Student as stu
+
+package Dokumente {
+	usecase "Offizielle Dokumente anzeigen" as do_1
+	usecase "Offizielle Dokumente herunterladen" as do_2
+}
+
+stu --> do_1
+stu --> do_2
+
+@enduml

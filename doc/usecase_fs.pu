@@ -1,0 +1,13 @@
+@startuml
+left to right direction
+actor Student as stu
+
+package Fileserv-Zugriff {
+	usecase "Dateien anzeigen" as fs_1
+	usecase "Dateien herunterladen" as fs_2
+}
+
+stu --> fs_1
+stu --> fs_2
+
+@enduml

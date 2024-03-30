@@ -1,0 +1,63 @@
+{% extends "baseLayout.html" %} 
+
+{% block content %}
+
+<div
+	class="wrapper"
+	id="exa_wrapper"
+	style="
+		display: grid;
+		height: 85vh;
+		padding: 1.25rem;
+		grid-template-columns: 2fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		grid-template-areas: 'ctt1 ctt2' 'ctt1 ctt3';
+		grid-gap: 1.5rem;
+        margin: 0rem;
+	"
+>
+
+    <!-- Content1 -->
+	<div
+		class="box"
+		id="exa_content1"
+		style="background: #485fc74a; grid-area: ctt1; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+	>
+		<div style="overflow-y: auto; height: 76vh;">
+			<p><b>Notenübersicht:</b></p>
+			{% block notenübersicht %}
+			
+			{% endblock notenübersicht %}
+		</div>
+	</div>
+	
+    <!-- Content2 -->
+    <div
+		class="box"
+		id="exa_content2"
+		style="background: #485fc74a; grid-area: ctt2; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+	>
+		<div style="overflow-y: auto; height: 34vh;">
+			<p><b>Getätigte Prüfungsanmeldungen:</b></p>
+			{% block abmeldung %}
+			
+			{% endblock abmeldung %}
+		</div>
+	</div>
+	
+    <!-- Content3 -->
+    <div
+		class="box"
+		id="exa_content3"
+		style="background: #485fc74a; grid-area: ctt3; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+	>
+		<div style="overflow-y: auto; height: 34vh;">
+			<p><b>Ausstehende Prüfungsanmeldungen:</b></p>
+			{% block anmeldung %}
+			
+			{% endblock anmeldung %}
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

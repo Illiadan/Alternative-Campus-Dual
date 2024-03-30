@@ -1,0 +1,110 @@
+{% extends "dashboardLayout.html" %}
+{% load static %}
+
+{% block shortTimetableWeek %}
+    <p>
+        <strong>Insert here:</strong>
+        <br />
+        <ol style="padding-left: 1rem;">
+            <li>Stundenplan der aktuellen Woche (Mo-Fr)</li>
+            <li>kritische Informationen müssen sichbar sein</li>
+            <ol style="padding-left: 1rem;">
+                <li>Zeit</li>
+                <li>Kurs/Prüfung</li>
+                <li>Raum/Online</li>
+                <li>Dozent/Aufsicht</li>
+            </ol>
+            <li>(optional) farbliche Hervorhebung des aktuellen Tages</li>
+            <li>(optional) Button zum wochenweise Durchklicken (evtl. nur lfd. Semester)</li>
+        </ol>
+    </p>
+{% endblock shortTimetableWeek %}
+
+{% block messageBoard %}
+    <div style="overflow-y: auto; height: 44vh;">
+        {% for msg in messages %}
+        <div class="box has-background-light">
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img src="{% static 'media/ba_leipzig_logo_short.png' %}" alt="Image" />
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p style="margin-bottom: 0rem;">
+                            <strong>{{msg.authorFName}} {{msg.authorLName}}</strong>
+                            <small>{{msg.posted}}</small>
+                            {% if msg.isoLastEdited > msg.isoPosted %}
+                            <small>(edited: {{msg.lastEdited}})</small>
+                            {% endif %}
+                            <br />
+                        </p>
+                        <p style="overflow-wrap: break-word; max-width: 53vw;">{{msg.message}}</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock messageBoard %}
+
+{% block shortRegisteredExam %}
+    <div style="padding-top: 0.3rem;">
+    {% for exam in registeredExams %}
+        <table style="width: 27vw;">
+            <tr style="text-align: left;">
+                <td><b>{{exam.name}} ({{exam.code}}) ({{exam.type}})</b></td>
+            </tr>
+            <tr style="text-align: left;">
+                <td style="padding-bottom: 0.3rem;">&nbsp&nbsp&nbsp&nbspTermin: <b>{{exam.date}}, {{exam.sTime}} - {{exam.eTime}}</b> / Raum: {{exam.room}}</td>
+            </tr>
+        </table>
+    {% endfor %}
+    </div>
+{% endblock shortRegisteredExam %}
+
+{% block shortUnregisteredExam %}
+    <div style="padding-top: 0.3rem;">
+        {% for exam in unregisteredExams %}
+            <table style="width: 27vw;">
+                <tr style="text-align: left;">
+                    <td style="padding-bottom: 0.3rem;">
+                        <b>{{exam.name}} ({{exam.code}}) ({{exam.type}})</b>
+                    </td>
+                </tr>
+            </table>
+        {% endfor %}
+    </div>
+{% endblock shortUnregisteredExam %}
+
+{% block shortResults %}
+    <div style="padding-top: 0.3rem;">
+        {% for exam in gradedExams %}
+        <details>
+            <summary><b>{{exam.name}} ({{exam.code}}) ({{exam.type}})</b></summary>
+            <table>
+                <tr>
+                    <td style="text-align: left; padding-right: 1.5rem;">&nbsp&nbsp&nbsp&nbspNote: <b>{{exam.result}}</b></td>
+                    <td>Veröffentlichung: {{exam.publication}}</td>
+                </tr>
+            </table>
+        </details>
+        {% endfor %}
+    </div>
+{% endblock shortResults %}
+
+{% block shortPendingResults %}
+    <div style="padding-top: 0.3rem;">
+        {% for exam in pendingResults %}
+        <table>
+            <tr>
+                <td><b>{{exam.name}} ({{exam.code}}) ({{exam.type}})</b></td>
+            </tr>
+            <tr>
+                <td style="text-align: left; padding-right: 1.5rem;">&nbsp&nbsp&nbsp&nbspPrüfung vom: {{exam.date}}</td>
+            </tr>
+        </table>
+        {% endfor %}
+    </div>
+{% endblock shortPendingResults %}

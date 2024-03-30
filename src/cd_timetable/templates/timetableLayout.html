@@ -1,0 +1,39 @@
+{% extends "baseLayout.html" %} 
+
+{% block content %}
+<script>
+  function switchSemgroup(evt) {
+    let url = `{% url "calendar" %}?semgroup=${evt.target.value}`;
+
+    {% if display %}
+    url += '&display={{ display }}'
+    {% endif %}
+
+    location.assign(url);
+
+  }
+
+  function switchLayout(evt) {
+    let url = "";
+
+    if (evt.target.value === "Monat") {
+      url = '{% url "calendar" %}?display=month';
+    } else if (evt.target.value === "Woche") {
+      url = '{% url "calendar" %}?display=week';
+    } else if (evt.target.value === "Tag") {
+      url = '{% url "calendar" %}?display=day';
+    }
+
+    location.assign(url);
+}
+</script>
+<div class="content" style="padding: 1.25rem">
+  <div class="pb-6">
+  {% block controls %} {% endblock controls %}
+  </div>
+    <div class="scroller-timetable" id="scroller">
+      {{ calendar }}
+    </div>
+
+</div>
+{% endblock content %}

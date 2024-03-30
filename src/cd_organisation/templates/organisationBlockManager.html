@@ -1,0 +1,391 @@
+{% extends "organisationLayout.html" %} {% block pflichtmodul %}
+<div class="wrapper" id="pflichtmodul">
+	<p style="padding-bottom: 1rem">
+		{% if user.role == "Stu" %}
+		<b>Pflichtmodule des {{ semesterIdx }}. Semesters:</b>
+		{% else %}
+		<b>Pflichtmodule:</b>
+		{% endif %}
+	</p>
+	<div style="overflow-y: auto; height: 37vh">
+		{% for module in modulesMandatory %}
+		<details>
+			<summary><b>{{module.title}}</b></summary>
+			<ul style="list-style-type: circle; list-style-position: outside; padding-left: 1.25rem">
+				{% if module.lecturer3 != None %}
+				<li>Dozent: {{module.lecturer1}}</li>
+				<li>Dozent: {{module.lecturer2}}</li>
+				<li>Dozent: {{module.lecturer3}}</li>
+				{% elif module.lecturer2 != None %}
+				<li>Dozent: {{module.lecturer1}}</li>
+				<li>Dozent: {{module.lecturer2}}</li>
+				{% else %}
+				<li>Dozent: {{module.lecturer1}}</li>
+				{% endif %}
+				<li>Prüfungsleistung: {{module.type}}</li>
+				<li>ECTS-Punkte: {{module.ects}}</li>
+			</ul>
+		</details>
+		{% endfor %}
+	</div>
+</div>
+{% endblock pflichtmodul %} {% block wahlmodul %}
+<div class="wrapper" id="wahlmodul">
+	<p style="padding-bottom: 1rem">
+		{% if user.role == "Stu" %}
+		<b>Wahlpflichtmodule des {{ semesterIdx }}. Semesters:</b>
+		{% else %}
+		<b>Wahlpflichtmodule:</b>
+		{% endif %}
+	</p>
+	<div style="overflow-y: auto; height: 37vh">
+		{% for module in modulesElective %}
+		<details>
+			<summary><b>{{module.title}}</b></summary>
+			<ul style="list-style-type: circle; list-style-position: outside; padding-left: 1.25rem">
+				{% if module.lecturer3 != None %}
+				<li>Dozent: {{module.lecturer1}}</li>
+				<li>Dozent: {{module.lecturer2}}</li>
+				<li>Dozent: {{module.lecturer3}}</li>
+				{% elif module.lecturer2 != None %}
+				<li>Dozent: {{module.lecturer1}}</li>
+				<li>Dozent: {{module.lecturer2}}</li>
+				{% else %}
+				<li>Dozent: {{module.lecturer1}}</li>
+				{% endif %}
+				<li>Prüfungsleistung: {{module.type}}</li>
+				<li>ECTS-Punkte: {{module.ects}}</li>
+			</ul>
+		</details>
+		{% endfor %}
+	</div>
+</div>
+{% endblock wahlmodul %} {% block modulkatalog %}
+<div class="wrapper" id="modulkatalog" style="overflow-y: auto; height: 37vh">
+	{% for term in terms %}
+	<details>
+		<summary><b>{{term}}. Semester</b></summary>
+		<ul style="list-style-type: circle; list-style-position: outside; padding-left: 1.25rem">
+			{% if term == 1 %} {% for module in modules.term1 %}
+			<li>{{module}}</li>
+			{% endfor %} {% elif term == 2 %} {% for module in modules.term2 %}
+			<li>{{module}}</li>
+			{% endfor %} {% elif term == 3 %} {% for module in modules.term3 %}
+			<li>{{module}}</li>
+			{% endfor %} {% elif term == 4 %} {% for module in modules.term4 %}
+			<li>{{module}}</li>
+			{% endfor %} {% elif term == 5 %} {% for module in modules.term5 %}
+			<li>{{module}}</li>
+			{% endfor %} {% elif term == 6 %} {% for module in modules.term6 %}
+			<li>{{module}}</li>
+			{% endfor %} {% endif %}
+		</ul>
+	</details>
+	{% endfor %}
+</div>
+{% endblock modulkatalog %} {% block blockplan %}
+<div
+	class="wrapper"
+	id="blockplan"
+	style="
+		display: grid;
+		padding: 0.1rem;
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 2fr 1fr 1fr 0.5fr 1fr 1fr;
+		grid-template-areas:
+			'empty1 sem1 sem1 sem2 sem2 sem3 sem3 sem4 sem4 sem5 sem5 sem6 sem6'
+			'empty1 ph11 ph12 ph21 ph22 ph31 ph32 ph41 ph42 ph51 ph52 ph61 ph62'
+			'empty1 adm adm adm adm adm adm adm adm adm adm adm adm'
+			'startt startt1 startt1 startt2 startt2 startt3 startt3 startt4 startt4 startt5 startt5 startt6 startt6'
+			'endt endt1 endt1 endt2 endt2 endt3 endt3 endt4 endt4 endt5 endt5 endt6 endt6'
+			'empty2 empty2 empty2 empty2 empty2 empty2 empty2 empty2 empty2 empty2 empty2 empty2 empty2'
+			'startp startp1 startp1 startp2 startp2 startp3 startp3 startp4 startp4 startp5 startp5 startp6 startp6'
+			'endp endp1 endp1 endp2 endp2 endp3 endp3 endp4 endp4 endp5 endp5 endp6 endp6';
+
+		grid-gap: 0.2rem;
+		margin: 0rem;
+	"
+>
+	<!-- Header Grafics -->
+
+	<div id="semester" style="background: rgb(255, 255, 0); grid-area: sem1; text-align: center">
+		<p>1. FS</p>
+	</div>
+	<div id="semester" style="background: rgb(255, 255, 0); grid-area: sem2; text-align: center">
+		<p>2. FS</p>
+	</div>
+	<div id="semester" style="background: rgb(255, 255, 0); grid-area: sem3; text-align: center">
+		<p>3. FS</p>
+	</div>
+	<div id="semester" style="background: rgb(255, 255, 0); grid-area: sem4; text-align: center">
+		<p>4. FS</p>
+	</div>
+	<div id="semester" style="background: rgb(255, 255, 0); grid-area: sem5; text-align: center">
+		<p>5. FS</p>
+	</div>
+	<div id="semester" style="background: rgb(255, 255, 0); grid-area: sem6; text-align: center">
+		<p>6. FS</p>
+	</div>
+
+	{% if sgrp.rythm == "TP" %}
+
+	<!-- Rythm Grafics for TP -->
+
+	<div id="ph11" style="background: rgb(0, 255, 242); grid-area: ph11; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph12" style="background: rgb(245, 188, 66); grid-area: ph12; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph21" style="background: rgb(0, 255, 242); grid-area: ph21; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph22" style="background: rgb(245, 188, 66); grid-area: ph22; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph31" style="background: rgb(0, 255, 242); grid-area: ph31; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph32" style="background: rgb(245, 188, 66); grid-area: ph32; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph41" style="background: rgb(0, 255, 242); grid-area: ph41; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph42" style="background: rgb(245, 188, 66); grid-area: ph42; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph51" style="background: rgb(0, 255, 242); grid-area: ph51; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph52" style="background: rgb(245, 188, 66); grid-area: ph52; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph61" style="background: rgb(0, 255, 242); grid-area: ph61; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph62" style="background: rgb(245, 188, 66); grid-area: ph62; text-align: center">
+		<p><b>P</b></p>
+	</div>
+
+	<!-- Start + End Dates -->
+
+	<div style="grid-area: startt; text-align: start; vertical-align: middle">
+		<p>Theorie:</p>
+	</div>
+	<div style="grid-area: startt1; text-align: end; vertical-align: middle">
+		<p>{{phase.term1_t_start}}</p>
+	</div>
+	<div style="grid-area: endt1; text-align: end; vertical-align: middle">
+		<p>- {{phase.term1_t_end}}</p>
+	</div>
+	<div style="grid-area: startt2; text-align: end; vertical-align: middle">
+		<p>{{phase.term2_t_start}}</p>
+	</div>
+	<div style="grid-area: endt2; text-align: end; vertical-align: middle">
+		<p>- {{phase.term2_t_end}}</p>
+	</div>
+	<div style="grid-area: startt3; text-align: end; vertical-align: middle">
+		<p>{{phase.term3_t_start}}</p>
+	</div>
+	<div style="grid-area: endt3; text-align: end; vertical-align: middle">
+		<p>- {{phase.term3_t_end}}</p>
+	</div>
+	<div style="grid-area: startt4; text-align: end; vertical-align: middle">
+		<p>{{phase.term4_t_start}}</p>
+	</div>
+	<div style="grid-area: endt4; text-align: end; vertical-align: middle">
+		<p>- {{phase.term4_t_end}}</p>
+	</div>
+	<div style="grid-area: startt5; text-align: end; vertical-align: middle">
+		<p>{{phase.term5_t_start}}</p>
+	</div>
+	<div style="grid-area: endt5; text-align: end; vertical-align: middle">
+		<p>- {{phase.term5_t_end}}</p>
+	</div>
+	<div style="grid-area: startt6; text-align: end; vertical-align: middle">
+		<p>{{phase.term6_t_start}}</p>
+	</div>
+	<div style="grid-area: endt6; text-align: end; vertical-align: middle">
+		<p>- {{phase.term6_t_end}}</p>
+	</div>
+
+	<div style="grid-area: startp; text-align: start; vertical-align: middle">
+		<p>Praxis:</p>
+	</div>
+	<div style="grid-area: startp1; text-align: end; vertical-align: middle">
+		<p>{{phase.term1_p_start}}</p>
+	</div>
+	<div style="grid-area: endp1; text-align: end; vertical-align: middle">
+		<p>- {{phase.term1_p_end}}</p>
+	</div>
+	<div style="grid-area: startp2; text-align: end; vertical-align: middle">
+		<p>{{phase.term2_p_start}}</p>
+	</div>
+	<div style="grid-area: endp2; text-align: end; vertical-align: middle">
+		<p>- {{phase.term2_p_end}}</p>
+	</div>
+	<div style="grid-area: startp3; text-align: end; vertical-align: middle">
+		<p>{{phase.term3_p_start}}</p>
+	</div>
+	<div style="grid-area: endp3; text-align: end; vertical-align: middle">
+		<p>- {{phase.term3_p_end}}</p>
+	</div>
+	<div style="grid-area: startp4; text-align: end; vertical-align: middle">
+		<p>{{phase.term4_p_start}}</p>
+	</div>
+	<div style="grid-area: endp4; text-align: end; vertical-align: middle">
+		<p>- {{phase.term4_p_end}}</p>
+	</div>
+	<div style="grid-area: startp5; text-align: end; vertical-align: middle">
+		<p>{{phase.term5_p_start}}</p>
+	</div>
+	<div style="grid-area: endp5; text-align: end; vertical-align: middle">
+		<p>- {{phase.term5_p_end}}</p>
+	</div>
+	<div style="grid-area: startp6; text-align: end; vertical-align: middle">
+		<p>{{phase.term6_p_start}}</p>
+	</div>
+	<div style="grid-area: endp6; text-align: end; vertical-align: middle">
+		<p>- {{phase.term6_p_end}}</p>
+	</div>
+
+	{% else %} {% if sgrp.rythm == "PT" %}
+
+	<!-- Rythm Grafics for PT -->
+
+	<div id="ph11" style="background: rgb(245, 188, 66); grid-area: ph11; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph12" style="background: rgb(0, 255, 242); grid-area: ph12; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph21" style="background: rgb(245, 188, 66); grid-area: ph21; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph22" style="background: rgb(0, 255, 242); grid-area: ph22; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph31" style="background: rgb(245, 188, 66); grid-area: ph31; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph32" style="background: rgb(0, 255, 242); grid-area: ph32; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph41" style="background: rgb(245, 188, 66); grid-area: ph41; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph42" style="background: rgb(0, 255, 242); grid-area: ph42; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph51" style="background: rgb(245, 188, 66); grid-area: ph51; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph52" style="background: rgb(0, 255, 242); grid-area: ph52; text-align: center">
+		<p><b>T</b></p>
+	</div>
+	<div id="ph61" style="background: rgb(245, 188, 66); grid-area: ph61; text-align: center">
+		<p><b>P</b></p>
+	</div>
+	<div id="ph62" style="background: rgb(0, 255, 242); grid-area: ph62; text-align: center">
+		<p><b>T</b></p>
+	</div>
+
+	<!-- Start + End Dates -->
+
+	<div style="grid-area: startt; text-align: start; vertical-align: middle">
+		<p>Praxis:</p>
+	</div>
+	<div style="grid-area: startt1; text-align: end; vertical-align: middle">
+		<p>{{phase.term1_p_start}}</p>
+	</div>
+	<div style="grid-area: endt1; text-align: end; vertical-align: middle">
+		<p>- {{phase.term1_p_end}}</p>
+	</div>
+	<div style="grid-area: startt2; text-align: end; vertical-align: middle">
+		<p>{{phase.term2_p_start}}</p>
+	</div>
+	<div style="grid-area: endt2; text-align: end; vertical-align: middle">
+		<p>- {{phase.term2_p_end}}</p>
+	</div>
+	<div style="grid-area: startt3; text-align: end; vertical-align: middle">
+		<p>{{phase.term3_p_start}}</p>
+	</div>
+	<div style="grid-area: endt3; text-align: end; vertical-align: middle">
+		<p>- {{phase.term3_p_end}}</p>
+	</div>
+	<div style="grid-area: startt4; text-align: end; vertical-align: middle">
+		<p>{{phase.term4_p_start}}</p>
+	</div>
+	<div style="grid-area: endt4; text-align: end; vertical-align: middle">
+		<p>- {{phase.term4_p_end}}</p>
+	</div>
+	<div style="grid-area: startt5; text-align: end; vertical-align: middle">
+		<p>{{phase.term5_p_start}}</p>
+	</div>
+	<div style="grid-area: endt5; text-align: end; vertical-align: middle">
+		<p>- {{phase.term5_p_end}}</p>
+	</div>
+	<div style="grid-area: startt6; text-align: end; vertical-align: middle">
+		<p>{{phase.term6_p_start}}</p>
+	</div>
+	<div style="grid-area: endt6; text-align: end; vertical-align: middle">
+		<p>- {{phase.term6_p_end}}</p>
+	</div>
+
+	<div style="grid-area: startp; text-align: start; vertical-align: middle">
+		<p>Theorie:</p>
+	</div>
+	<div style="grid-area: startp1; text-align: end; vertical-align: middle">
+		<p>{{phase.term1_t_start}}</p>
+	</div>
+	<div style="grid-area: endp1; text-align: end; vertical-align: middle">
+		<p>- {{phase.term1_t_end}}</p>
+	</div>
+	<div style="grid-area: startp2; text-align: end; vertical-align: middle">
+		<p>{{phase.term2_t_start}}</p>
+	</div>
+	<div style="grid-area: endp2; text-align: end; vertical-align: middle">
+		<p>- {{phase.term2_t_end}}</p>
+	</div>
+	<div style="grid-area: startp3; text-align: end; vertical-align: middle">
+		<p>{{phase.term3_t_start}}</p>
+	</div>
+	<div style="grid-area: endp3; text-align: end; vertical-align: middle">
+		<p>- {{phase.term3_t_end}}</p>
+	</div>
+	<div style="grid-area: startp4; text-align: end; vertical-align: middle">
+		<p>{{phase.term4_t_start}}</p>
+	</div>
+	<div style="grid-area: endp4; text-align: end; vertical-align: middle">
+		<p>- {{phase.term4_t_end}}</p>
+	</div>
+	<div style="grid-area: startp5; text-align: end; vertical-align: middle">
+		<p>{{phase.term5_t_start}}</p>
+	</div>
+	<div style="grid-area: endp5; text-align: end; vertical-align: middle">
+		<p>- {{phase.term5_t_end}}</p>
+	</div>
+	<div style="grid-area: startp6; text-align: end; vertical-align: middle">
+		<p>{{phase.term6_t_start}}</p>
+	</div>
+	<div style="grid-area: endp6; text-align: end; vertical-align: middle">
+		<p>- {{phase.term6_t_end}}</p>
+	</div>
+
+	{% else %}
+	<div
+		id="adm"
+		style="
+			background: rgb(135, 135, 135);
+			grid-area: adm;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		"
+	>
+		<p><b>Non-Student View</b></p>
+	</div>
+	{% endif %} {% endif %}
+</div>
+{% endblock blockplan %}

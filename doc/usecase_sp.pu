@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+actor Student as stu
+actor Dozent as doz
+actor Organisator as org
+
+package Stundenplan {
+	usecase "Stundenplan anzeigen" as sp_1
+	usecase "Stundenplan exportieren" as sp_2
+	usecase "Ereignis anlegen" as sp_3
+	usecase "Ereignis bearbeiten" as sp_4
+	usecase "Ereignis löschen" as sp_5
+}
+
+stu --> sp_1
+stu --> sp_2
+
+doz --> sp_1
+doz --> sp_2
+
+org --> sp_1
+org --> sp_2
+org --> sp_3
+org --> sp_4
+org --> sp_5
+
+@enduml

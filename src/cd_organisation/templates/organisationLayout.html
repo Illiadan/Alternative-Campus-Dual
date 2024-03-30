@@ -1,0 +1,92 @@
+{% extends "baseLayout.html" %}
+
+{% block content %}
+    
+<div
+	class="wrapper"
+	id="org_wrapper"
+	style="
+		display: grid;
+		height: 85vh;
+		padding: 1.25rem;
+		grid-template-columns: 1fr 1fr 1fr 2fr;
+		grid-template-rows: 3fr 2fr;
+		grid-template-areas: 'ctt1 ctt2 ctt3 ctt5' 'ctt4 ctt4 ctt4 ctt5';
+		grid-gap: 1.5rem;
+        margin: 0rem;
+	"
+>
+
+    <!-- Content1 -->
+	<div
+		class="box"
+		id="org_content1"
+		style="background: #485fc74a; grid-area: ctt1; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+	>
+        {% block pflichtmodul %}
+        {% endblock pflichtmodul %}
+	</div>
+	
+    <!-- Content2 -->
+    <div
+		class="box"
+		id="org_content2"
+		style="background: #485fc74a; grid-area: ctt2; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+	>
+        {% block wahlmodul %}
+        {% endblock wahlmodul %}
+	</div>
+	
+    <!-- Content3 -->
+    <div
+		class="box"
+		id="org_content3"
+		style="background: #485fc74a; grid-area: ctt3; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+	>
+        <p style="padding-bottom: 1rem">
+            {% if course.abbrev == "CS" %}
+            <a target="_blank" rel="noopener noreferrer" href="https://www.ba-leipzig.de/fileadmin/leipzig/zentrale-dokumente/IT/2.5_-_Modulbeschreibungen_CS.pdf">
+                <b>Modulkatalog {{course.abbrev}}:</b>
+            </a>
+            {% elif course.abbrev == "SE" %}
+            <a target="_blank" rel="noopener noreferrer" href="https://www.ba-leipzig.de/fileadmin/leipzig/zentrale-dokumente/SE/Modulhandbuch_SG_Service_Engineering_LE_barrierefrei.pdf">
+                <b>Modulkatalog {{course.abbrev}}:</b>
+            </a>            
+            {% elif course.abbrev == "CN" or course.abbrev == "SW" or course.abbrev == "IW" %}
+            <a target="_blank" rel="noopener noreferrer" href="https://www.ba-leipzig.de/fileadmin/leipzig/zentrale-dokumente/VM_allgemein/Modulhandbuch_Vermoegensmanagement.pdf">
+                <b>Modulkatalog {{course.abbrev}}:</b>
+            </a>
+            {% else %}
+            <b>Modulkatalog {{course.abbrev}}:</b>
+            {% endif %}
+	    </p>
+        {% block modulkatalog %}
+        {% endblock modulkatalog %}
+	</div>
+
+    <!-- Content4 -->
+	<div
+    class="box"
+    id="org_content4"
+    style="background: #485fc74a; grid-area: ctt4; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+    >
+        <p style="padding-bottom: 0.5rem">
+            <strong>Blockplan:</strong>
+            <br />
+        </p>
+        {% block blockplan %}
+            
+        {% endblock blockplan %}
+    </div>
+
+    <!-- Content5 -->
+	<div
+    class="box"
+    id="org_content5"
+    style="background: #485fc74a; grid-area: ctt5; margin-bottom: 0rem; border-style: groove; border-color: #485fc7"
+    >
+       <iframe style="background: #cad0ef; width: 100%; height: 100%;" src="/filebrowser" title="Browser"></iframe> 
+    </div>
+</div>
+
+{% endblock content %}

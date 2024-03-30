@@ -1,0 +1,172 @@
+{% extends "examinationLayout.html" %}
+
+{% block notenübersicht %}
+    <table style="width: 55vw;">
+        <tr>
+            <th style="text-align: center; padding-right: 1.5rem; padding-top: 0.5rem; padding-bottom: 0.5rem;">Modul</th>
+            <th style="text-align: center; padding-right: 1.5rem; padding-top: 0.5rem; padding-bottom: 0.5rem;">Note</th>
+            <th style="text-align: center; padding-right: 1.5rem; padding-top: 0.5rem; padding-bottom: 0.5rem;">Feststellung</th>
+            <th style="text-align: center; padding-right: 1.5rem; padding-top: 0.5rem; padding-bottom: 0.5rem;">Veröffentlichung</th>
+            <th style="text-align: center; padding-top: 0.5rem; padding-bottom: 0.5rem;">Notenspiegel</th>
+        </tr>
+        {% for exam in gradedExams %}
+        <tr>
+            <td style="padding-right: 1.5rem; padding-bottom: 0.1rem;">{{exam.name}} ({{exam.code}}) ({{exam.attempt}})</td>
+            <td style="text-align: center; padding-right: 1.5rem; padding-bottom: 0.1rem;">{{exam.result}}</td>
+            <td style="text-align: center; padding-right: 1.5rem; padding-bottom: 0.1rem;">{{exam.evaluation}}</td>
+            <td style="text-align: center; padding-right: 1.5rem; padding-bottom: 0.1rem;">{{exam.publication}}</td>
+            <td style="text-align: center; padding-bottom: 0.1rem;">
+                <button onclick="popup({{exam.exam_id}}, '{{exam.code}}', '{{exam.result}}', {{summary}})">Notenspiegel</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div 
+        class="notenspiegel" 
+        id="modal" 
+        style="
+            display: none; 
+            position: fixed; 
+            z-index: 35; 
+            left: 0; 
+            top: 0; 
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        "
+    >
+        <div 
+            id="modalContent"
+            style="
+                background-color: #fefefe;
+                margin-top: 20vmin;
+                margin-left: 20vmax;
+                margin-right: 20vmax;
+                padding: 1.25rem;
+                border: 1px solid #888;
+                width: 60vw;
+            "
+        >
+            <div id="modalheader">
+                <h1 id="title" style="float: left; font-size: 28px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif"></h1>
+                <span class="close" style="color: #aaa; float: right; font-size: 2.5rem; font-weight: bold; cursor: pointer;">&times;</span>
+                </br>
+                </br>
+                <h5 id="subtitle" style="float: left; padding-right: 2rem; font-family: Verdana, Geneva, Tahoma, sans-serif;"></h5>
+                <h5 id="result" style="float: left; font-family: Verdana, Geneva, Tahoma, sans-serif"></h5>
+            </div>
+            <div id="modalBody">
+                <canvas id="chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0""></script>
+    <script>
+        function popup(examId, examCode, examResult, summary) {
+            let modal = document.getElementById("modal");
+            let close = document.getElementsByClassName("close")[0];
+            let popup = document.getElementById("chart");
+            modal.style.display = "block";
+            document.getElementById("title").innerHTML = examCode;
+            close.onclick = () => {
+                Chart.getChart("chart").destroy();
+                modal.style.display = "none";
+            };
+            window.onclick = (event) => {
+                if (event.target == modal) {
+                    Chart.getChart("chart").destroy();
+                    modal.style.display = "none";
+                }
+            };
+            for (const sum of summary) {
+                if (sum[0] == examId) {
+                    document.getElementById("subtitle").innerHTML = `Bewertete Prüfungen gesamt: ${sum[1]}`;
+                    document.getElementById("result").innerHTML = `Eigenes Ergebnis: ${examResult}`;
+                    drawChart(popup, sum);
+                    break;
+                }
+            }
+        }
+
+        function drawChart(element, sum) {
+            let ctx = element.getContext("2d");
+            let chart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5"],
+                    datasets: [
+                        {
+                            label: "Noten",
+                            backgroundColor: "#485fc7",
+                            borderColor: "#417690",
+                            data: [sum[2], sum[3], sum[4], sum[5], sum[6]]
+                        }
+                    ]   
+                },
+                options: {
+                    title: {
+                        text: "Notenspiegel",
+                        display: false
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock notenübersicht %}
+
+{% block abmeldung %}
+    <ul>
+    {% for exam in registeredExams %}
+        <details>
+            <summary><strong>{{exam.name}} ({{exam.code}}) ({{exam.type}})</strong></summary>
+            <table style="width: 27vw;">
+                <tr>
+                    <td style="text-align: left;">Termin: <b>{{exam.date}}, {{exam.sTime}} - {{exam.eTime}}</b> / Raum: {{exam.room}}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding-right: 1.5rem;">Späteste Abmeldung bis: {{exam.deadline}}</td>
+                    <td style="text-align: right; padding-right: 1.5rem;">
+                        {% if now <= exam.isoDeadline %}
+                        <form action="unregUser" method="post">
+                            {% csrf_token %}
+                            <button type="submit" value="{{exam.id}}_{{exam.isoDeadline}}" name="unreg">Abmeldung</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </details>
+    {% endfor %}
+    </ul>
+{% endblock abmeldung %}
+
+{% block anmeldung %}
+    <ul>
+    {% for exam in pendingExams %}
+        <details style="padding-bottom: 0.3rem;">
+            <summary><strong>{{exam.name}} ({{exam.code}}) ({{exam.type}})</strong></summary>
+            <table style="width: 27vw;">
+                <tr>
+                    <td style="text-align: left;">Termin: <b>{{exam.date}}, {{exam.sTime}} - {{exam.eTime}}</b> / Raum: {{exam.room}}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding-right: 1.5rem;">Späteste Anmeldung bis: {{exam.deadline}}</td>
+                    <td style="text-align: right; padding-right: 1.5rem;">
+                        {% if now <= exam.isoDeadline %}
+                            {% if exam.attempt < 2 %}
+                                <form action="regUser" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" value="{{exam.id}}_{{exam.isoDeadline}}" name="reg">Anmeldung</button>
+                                </form>
+                            {% else %}
+                                <p style="color: red">Prüfungs-<br/>anmeldung durch<br/>das Prüfungsamt</p>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </details>
+    {% endfor %}
+{% endblock anmeldung %}

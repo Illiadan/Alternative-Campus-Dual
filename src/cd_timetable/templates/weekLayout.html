@@ -1,0 +1,37 @@
+{% extends "timetableLayout.html" %} 
+
+{% block controls %}
+<script>
+window.addEventListener("load", function(){
+  document.getElementById("scroller").scrollTop = 800;
+});
+</script>
+<a class="button is-info is-pulled-left" href="{% url 'calendar' %}?{{ prev_week }}{% if display %}&display={{ display }}{% endif %}">&larr; Letzte Woche</a>
+<span class="is-pulled-right">
+  {% if user.role == "Org" %}
+  <label class="subtitle is-5">Seminargruppe:</label>
+  <div class="select mr-2">
+      <select id="select-semgroup" onChange="switchSemgroup(event)">
+        <option>{{ semgroup }}</option>
+        {% for group in seminargroups %}
+          {% if group.code != semgroup %}
+          <option>{{ group.code }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+  </div>
+  {% endif %}
+  <label class="subtitle is-5">Anzeige:</label>
+  <div class="select mr-2">
+      <select onChange="switchLayout(event)">
+        <option>Woche</option>
+        <option>Monat</option>
+        <option>Tag</option>
+      </select>
+  </div>
+  {% if user.role == "Stu" or user.role == "Lec" %}
+  <a class="button is-info is-light mr-2" href="{% url 'ics' %}">.ics Datei downloaden</a>
+  {% endif %}
+<a class="button is-info" href="{% url 'calendar' %}?{{ next_week }}{% if display %}&display={{ display }}{% endif %}">Nächste Woche &rarr;</a>
+</span>
+{% endblock controls %}
